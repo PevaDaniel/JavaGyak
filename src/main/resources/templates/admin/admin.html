@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
     <link rel="stylesheet" th:href="@{css/style.css}">
 </head>
 <body>
+<main>
+    <a th:href="@{/home}" class="button">Home</a>
+    <a th:href="@{/database}" class="btn">Adatbázis</a>
+    <a th:href="@{/chart}" class="btn">Helyezések diagram</a>
+    <a th:href="@{/crud}" class="btn" sec:authorize="hasRole('ADMIN')">CRUD</a>
+    <a th:href="@{/messages/contact}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetküldés</a>
+    <a th:href="@{/messages}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetek</a>
+    <a th:href="@{/admin}" class="btn" sec:authorize="hasRole('ADMIN')">Admin</a>
+</main>
 <h1>Admin oldal</h1>
 <p>Itt csak az ADMIN szerepkörű felhasználók férnek hozzá.</p>
 </body>
