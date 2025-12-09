@@ -2,44 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Message Chart</title>
+    <title>Helyezések Diagram</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        canvas { max-width: 600px; margin: 0 auto; }
+    </style>
 </head>
 <body>
-<nav>
-    <ul>
-        <li><a th:href="@{/}">Home</a></li>
-        <li><a th:href="@{/chart}">Chart</a></li>
-        <li><a th:href="@{/logout}">Logout</a></li>
-    </ul>
-</nav>
 
-<h1>Üzenetek email domain szerint</h1>
-<canvas id="myChart" width="400" height="200"></canvas>
+<h1>Helyezések Diagram</h1>
+
+<canvas id="helyezesChart"></canvas>
 
 <script th:inline="javascript">
-    const labels = /*[[${labels}]]*/ [];
-    const data = /*[[${data}]]*/ [];
+    const helyezesek = /*[[${eredmenyek.*.helyezes}]]*/ [];
 
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
+    const data = {
+        labels: helyezesek.map((_, i) => i + 1),
+        datasets: [{
+            data: helyezesek,
+            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+        }]
+    };
+
+    new Chart(document.getElementById('helyezesChart'), {
         type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Üzenetek száma domain szerint',
-                data: data,
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
+        data: data,
         options: {
-            scales: {
-                y: { beginAtZero: true }
-            }
+            plugins: { legend: { display: false } },
+            scales: { x: { display: false }, y: { beginAtZero: true } }
         }
     });
+    /*]]>*/
 </script>
+
 </body>
 </html>

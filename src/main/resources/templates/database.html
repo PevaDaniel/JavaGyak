@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adatbázis nézet</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h2 {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Adatbázis nézet</h1>
+
+<!-- Eredmeny tábla -->
+<h2>Eredmények</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Dátum</th>
+        <th>Pilóta AZ</th>
+        <th>Helyezés</th>
+        <th>Hiba</th>
+        <th>Csapat</th>
+        <th>Tipus</th>
+        <th>Motor</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="e : ${eredmenyek}">
+        <td th:text="${e.id}">1</td>
+        <td th:text="${e.datum}">2025-01-01</td>
+        <td th:text="${e.pilotaaz}">1</td>
+        <td th:text="${e.helyezes}">1</td>
+        <td th:text="${e.hiba}">hiba</td>
+        <td th:text="${e.csapat}">csapat</td>
+        <td th:text="${e.tipus}">tipus</td>
+        <td th:text="${e.motor}">motor</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- GP tábla -->
+<h2>GP-k</h2>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Dátum</th>
+        <th>Név</th>
+        <th>Helyszín</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="gp : ${gps}">
+        <td th:text="${gp.id}">1</td>
+        <td th:text="${gp.datum}">2025-01-01</td>
+        <td th:text="${gp.nev}">GP Név</td>
+        <td th:text="${gp.helyszin}">Helyszín</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Pilota tábla -->
+<h2>Pilóták</h2>
+<table>
+    <thead>
+    <tr>
+        <th>AZ</th>
+        <th>Név</th>
+        <th>Nem</th>
+        <th>Születési dátum</th>
+        <th>Nemzet</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${pilotak}">
+        <td th:text="${p.az}">1</td>
+        <td th:text="${p.nev}">Pilóta Név</td>
+        <td th:text="${p.nem}">Férfi/Nő</td>
+        <td th:text="${p.szuldat}">2000-01-01</td>
+        <td th:text="${p.nemzet}">Nemzet</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
