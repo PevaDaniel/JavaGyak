@@ -1,11 +1,16 @@
 package org.example.beadando_gy.Controller;
 
+import org.example.beadando_gy.Entity.Eredmeny;
+import org.example.beadando_gy.Entity.Gp;
+import org.example.beadando_gy.Entity.Pilota;
+import org.example.beadando_gy.repository.EredmenyRepository;
 import org.example.beadando_gy.repository.GpRepository;
 import org.example.beadando_gy.repository.PilotaRepository;
-import org.example.beadando_gy.repository.EredmenyRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 public class DatabaseController {
@@ -14,7 +19,9 @@ public class DatabaseController {
     private final GpRepository gpRepository;
     private final PilotaRepository pilotaRepository;
 
-    public DatabaseController(EredmenyRepository eredmenyRepository, GpRepository gpRepository, PilotaRepository pilotaRepository) {
+    public DatabaseController(EredmenyRepository eredmenyRepository,
+                              GpRepository gpRepository,
+                              PilotaRepository pilotaRepository) {
         this.eredmenyRepository = eredmenyRepository;
         this.gpRepository = gpRepository;
         this.pilotaRepository = pilotaRepository;

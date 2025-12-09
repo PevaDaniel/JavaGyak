@@ -1,52 +1,100 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Adatbázis</title>
-    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>Forma1 Adatbázis</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+
+<header>
+    <h1>Forma1 Adatbázis</h1>
+</header>
+
 <main>
-    <a th:href="@{/home}" class="button">Home</a>
-    <a th:href="@{/database}" class="btn">Adatbázis</a>
-    <a th:href="@{/chart}" class="btn">Helyezések diagram</a>
-    <a th:href="@{/crud}" class="btn" sec:authorize="hasRole('ADMIN')">CRUD</a>
-    <a th:href="@{/messages/contact}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetküldés</a>
-    <a th:href="@{/messages}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetek</a>
-    <a th:href="@{/admin}" class="btn" sec:authorize="hasRole('ADMIN')">Admin</a>
+    <div class="menu-buttons">
+        <a th:href="@{/}" class="btn">Home</a>
+        <a th:href="@{/database}" class="btn">Adatbázis</a>
+        <a th:href="@{/chart}" class="btn">Helyezések diagram</a>
+        <a th:href="@{/crud}" class="btn" sec:authorize="hasRole('ADMIN')">CRUD</a>
+        <a th:href="@{/messages/contact}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetküldés</a>
+        <a th:href="@{/messages}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetek</a>
+        <a th:href="@{/admin}" class="btn" sec:authorize="hasRole('ADMIN')">Admin</a>
+    </div>
+    <section>
+        <h2>Eredmények</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Pilóta AZ</th>
+                <th>Helyezés</th>
+                <th>Hiba</th>
+                <th>Csapat</th>
+                <th>Típus</th>
+                <th>Motor</th>
+                <th>Dátum</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e : ${eredmenyek}">
+                <td th:text="${e.id}" data-label="ID"></td>
+                <td th:text="${e.pilotaaz}" data-label="Pilóta AZ"></td>
+                <td th:text="${e.helyezes}" data-label="Helyezés"></td>
+                <td th:text="${e.hiba}" data-label="Hiba"></td>
+                <td th:text="${e.csapat}" data-label="Csapat"></td>
+                <td th:text="${e.tipus}" data-label="Típus"></td>
+                <td th:text="${e.motor}" data-label="Motor"></td>
+                <td th:text="${e.datum}" data-label="Dátum"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>GP-k</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Dátum</th>
+                <th>Név</th>
+                <th>Helyszín</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="g : ${gpList}">
+                <td th:text="${g.datum}" data-label="Dátum"></td>
+                <td th:text="${g.nev}" data-label="Név"></td>
+                <td th:text="${g.helyszin}" data-label="Helyszín"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h2>Pilóták</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>AZ</th>
+                <th>Név</th>
+                <th>Nem</th>
+                <th>Születés</th>
+                <th>Nemzet</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${pilotaList}">
+                <td th:text="${p.az}" data-label="AZ"></td>
+                <td th:text="${p.nev}" data-label="Név"></td>
+                <td th:text="${p.nem}" data-label="Nem"></td>
+                <td th:text="${p.szuldat}" data-label="Születés"></td>
+                <td th:text="${p.nemzet}" data-label="Nemzet"></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
 </main>
-<h1>Adatbázis</h1>
-
-<h2>Eredmények</h2>
-<table>
-    <tr><th>ID</th><th>Pilóta AZ</th><th>Helyezés</th></tr>
-    <tr th:each="e : ${eredmenyek}">
-        <td th:text="${e.id}"></td>
-        <td th:text="${e.pilotaaz}"></td>
-        <td th:text="${e.helyezes}"></td>
-    </tr>
-</table>
-
-<h2>GP-k</h2>
-<table>
-    <tr><th>Dátum</th><th>Név</th><th>Helyszín</th></tr>
-    <tr th:each="g : ${gpList}">
-        <td th:text="${g.datum}"></td>
-        <td th:text="${g.nev}"></td>
-        <td th:text="${g.helyszin}"></td>
-    </tr>
-</table>
-
-<h2>Pilóták</h2>
-<table>
-    <tr><th>AZ</th><th>Név</th><th>Nem</th><th>Születés</th><th>Nemzet</th></tr>
-    <tr th:each="p : ${pilotaList}">
-        <td th:text="${p.az}"></td>
-        <td th:text="${p.nev}"></td>
-        <td th:text="${p.nem}"></td>
-        <td th:text="${p.szuldat}"></td>
-        <td th:text="${p.nemzet}"></td>
-    </tr>
-</table>
 </body>
 </html>
