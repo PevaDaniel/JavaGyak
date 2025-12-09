@@ -9,50 +9,21 @@ public class Pilota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long az; // pilóta azonosító
+    private Long az;
 
     private String nev;
     private String nem;
     private LocalDate szuldat;
     private String nemzet;
 
-    public Long getAz() {
-        return az;
-    }
-
-    public void setAz(Long az) {
-        this.az = az;
-    }
-
-    public String getNev() {
-        return nev;
-    }
-
-    public void setNev(String nev) {
-        this.nev = nev;
-    }
-
-    public String getNem() {
-        return nem;
-    }
-
-    public void setNem(String nem) {
-        this.nem = nem;
-    }
-
-    public LocalDate getSzuldat() {
-        return szuldat;
-    }
-
-    public void setSzuldat(LocalDate szuldat) {
-        this.szuldat = szuldat;
-    }
-
-    public String getNemzet() {
-        return nemzet;
-    }
-
-    public void setNemzet(String nemzet) {
-        this.nemzet = nemzet;
-    }
+    public Long getAz() { return az; }
+    public void setAz(Long az) { this.az = az; }
+    public String getNev() { return nev; }
+    public void setNev(String nev) { this.nev = nev; }
+    public String getNem() { return nem; }
+    public void setNem(String nem) { this.nem = nem; }
+    public LocalDate getSzuldat() { return szuldat; }
+    public void setSzuldat(LocalDate szuldat) { this.szuldat = szuldat; }
+    public String getNemzet() { return nemzet; }
+    public void setNemzet(String nemzet) { this.nemzet = nemzet; }
 }

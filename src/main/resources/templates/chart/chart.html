@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Helyezések Diagram</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1>Helyezések Diagram</h1>
+<canvas id="myChart" width="400" height="200"></canvas>
+
+<script th:inline="javascript">
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const labels = [[$,{eredmenyek:id}]];
+    const data = [[$,{eredmenyek:helyezes}]];
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Helyezés',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            scales: {
+                x: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+</body>
+</html>

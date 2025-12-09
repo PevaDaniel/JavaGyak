@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adatbázis</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+</head>
+<body>
+<h1>Adatbázis</h1>
+
+<h2>Eredmények</h2>
+<table>
+    <tr><th>ID</th><th>Pilóta AZ</th><th>Helyezés</th></tr>
+    <tr th:each="e : ${eredmenyek}">
+        <td th:text="${e.id}"></td>
+        <td th:text="${e.pilotaaz}"></td>
+        <td th:text="${e.helyezes}"></td>
+    </tr>
+</table>
+
+<h2>GP-k</h2>
+<table>
+    <tr><th>Dátum</th><th>Név</th><th>Helyszín</th></tr>
+    <tr th:each="g : ${gpList}">
+        <td th:text="${g.datum}"></td>
+        <td th:text="${g.nev}"></td>
+        <td th:text="${g.helyszin}"></td>
+    </tr>
+</table>
+
+<h2>Pilóták</h2>
+<table>
+    <tr><th>AZ</th><th>Név</th><th>Nem</th><th>Születés</th><th>Nemzet</th></tr>
+    <tr th:each="p : ${pilotaList}">
+        <td th:text="${p.az}"></td>
+        <td th:text="${p.nev}"></td>
+        <td th:text="${p.nem}"></td>
+        <td th:text="${p.szuldat}"></td>
+        <td th:text="${p.nemzet}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kapcsolat</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+</head>
+<body>
+<h1>Kapcsolat</h1>
+
+<form th:action="@{/messages/contact}" th:object="${message}" method="post">
+    <label>Név:</label>
+    <input type="text" th:field="*{name}" required/>
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required/>
+    <label>Üzenet:</label>
+    <textarea th:field="*{content}" required></textarea>
+    <button type="submit">Küldés</button>
+</form>
+
+<p th:if="${successMessage}" th:text="${successMessage}"></p>
+</body>
+</html>

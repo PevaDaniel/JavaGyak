@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Forma1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<header>
+    <h1 th:text="${title}">Forma1</h1>
+</header>
+
+<main>
+    <p th:text="${welcomeMessage}">Üdvözöljük a Forma1 weboldalán!</p>
+    <a th:href="@{/database}" class="btn">Adatbázis</a>
+    <a th:href="@{/chart}" class="btn">Helyezések diagram</a>
+    <a th:href="@{/crud}" class="btn" sec:authorize="hasRole('ADMIN')">CRUD</a>
+    <a th:href="@{/messages/contact}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetküldés</a>
+    <a th:href="@{/messages}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetek</a>
+    <a th:href="@{/admin}" class="btn" sec:authorize="hasRole('ADMIN')">Admin</a>
+
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/auth/login}" class="btn">Bejelentkezés</a>
+        <a th:href="@{/auth/register}" class="btn">Regisztráció</a>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn">Kijelentkezés</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

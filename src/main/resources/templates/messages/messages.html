@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Üzenetek</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+</head>
+<body>
+<h1>Üzenetek</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Név</th>
+        <th>Email</th>
+        <th>Üzenet</th>
+        <th>Időpont</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="msg : ${messages}">
+        <td th:text="${msg.name}"></td>
+        <td th:text="${msg.email}"></td>
+        <td th:text="${msg.content}"></td>
+        <td th:text="${#temporals.format(msg.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

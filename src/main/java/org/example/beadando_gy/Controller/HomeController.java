@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping({"/", "/home"})
+    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("title", "Rivendell Racing");
         model.addAttribute("welcomeMessage", "Üdvözöljük a Rivendell Racing weboldalán!");
-        return "home"; // templates/home/home.html
+        return "home/home";
     }
 }

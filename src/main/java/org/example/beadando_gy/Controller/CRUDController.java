@@ -23,31 +23,22 @@ public class CRUDController {
         List<Eredmeny> eredmenyek = eredmenyRepository.findAll();
         model.addAttribute("eredmenyek", eredmenyek);
         model.addAttribute("eredmeny", new Eredmeny());
-        return "crud";
+        return "crud/crud";
     }
 
     @PostMapping("/create")
-    public String saveOrUpdate(@ModelAttribute Eredmeny eredmeny) {
-        if (eredmeny.getId() != null) {
-            // Edit
-            Eredmeny existing = eredmenyRepository.findById(eredmeny.getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid id:" + eredmeny.getId()));
-            existing.setDatum(eredmeny.getDatum());
-            existing.setPilotaaz(eredmeny.getPilotaaz());
-            existing.setHelyezes(eredmeny.getHelyezes());
-            existing.setHiba(eredmeny.getHiba());
-            existing.setCsapat(eredmeny.getCsapat());
-            existing.setTipus(eredmeny.getTipus());
-            existing.setMotor(eredmeny.getMotor());
-            eredmenyRepository.save(existing);
-        } else {
-            // Új rekord
-            eredmenyRepository.save(eredmeny);
-        }
+    public String create(@ModelAttribute Eredmeny eredmeny) {
+        eredmenyRepository.save(eredmeny);
         return "redirect:/crud";
     }
 
-    // Törlés
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Long id, @ModelAttribute Eredmeny eredmeny) {
+        eredmeny.setId(id);
+        eredmenyRepository.save(eredmeny);
+        return "redirect:/crud";
+    }
+
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
         eredmenyRepository.deleteById(id);
