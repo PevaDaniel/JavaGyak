@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class Gp {
 
     @Id
-    private LocalDate datum; // Primary key a táblában
+    private LocalDate datum;
 
     private String nev;
     private String helyszin;

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>CRUD</title>
-    <link rel="stylesheet" th:href="@{css/style.css}">
+    <title>CRUD – Eredmények</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <main>
@@ -16,32 +16,14 @@
     <a th:href="@{/admin}" class="btn" sec:authorize="hasRole('ADMIN')">Admin</a>
 </main>
 <h1>CRUD – Eredmények</h1>
-
-<form th:action="@{/crud/create}" th:object="${eredmeny}" method="post">
-    <label>Dátum:</label>
-    <input type="date" th:field="*{datum}" required/>
-    <label>Pilóta AZ:</label>
-    <input type="number" th:field="*{pilotaaz}" required/>
-    <label>Helyezés:</label>
-    <input type="number" th:field="*{helyezes}" required/>
-    <label>Hiba:</label>
-    <input type="text" th:field="*{hiba}"/>
-    <label>Csapat:</label>
-    <input type="text" th:field="*{csapat}"/>
-    <label>Típus:</label>
-    <input type="text" th:field="*{tipus}"/>
-    <label>Motor:</label>
-    <input type="text" th:field="*{motor}"/>
-    <button type="submit">Mentés</button>
-</form>
-
+<a th:href="@{/crud/new}">Új eredmény</a>
 <table>
     <thead>
     <tr>
         <th>ID</th>
-        <th>Dátum</th>
-        <th>Pilóta</th>
+        <th>Pilóta AZ</th>
         <th>Helyezés</th>
+        <th>GP dátum</th>
         <th>Hiba</th>
         <th>Csapat</th>
         <th>Típus</th>
@@ -52,17 +34,16 @@
     <tbody>
     <tr th:each="e : ${eredmenyek}">
         <td th:text="${e.id}"></td>
-        <td th:text="${e.datum}"></td>
         <td th:text="${e.pilotaaz}"></td>
         <td th:text="${e.helyezes}"></td>
+        <td th:text="${e.datum}"></td>
         <td th:text="${e.hiba}"></td>
         <td th:text="${e.csapat}"></td>
         <td th:text="${e.tipus}"></td>
         <td th:text="${e.motor}"></td>
         <td>
-            <form th:action="@{/crud/delete/{id}(id=${e.id})}" method="get">
-                <button type="submit">Törlés</button>
-            </form>
+            <a th:href="@{/crud/edit/{id}(id=${e.id})}">Szerkesztés</a>
+            <a th:href="@{/crud/delete/{id}(id=${e.id})}">Törlés</a>
         </td>
     </tr>
     </tbody>

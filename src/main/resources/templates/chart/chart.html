@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Helyezések Diagram</title>
-    <link rel="stylesheet" th:href="@{css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -16,17 +16,18 @@
     <a th:href="@{/messages}" class="btn" sec:authorize="hasAnyRole('USER','ADMIN')">Üzenetek</a>
     <a th:href="@{/admin}" class="btn" sec:authorize="hasRole('ADMIN')">Admin</a>
 </main>
+
 <h1>Helyezések Diagram</h1>
 <canvas id="myChart" width="400" height="200"></canvas>
 
 <script th:inline="javascript">
+    const data = [[${helyezesek}]];
+
     const ctx = document.getElementById('myChart').getContext('2d');
-    const labels = [[$,{eredmenyek:id}]];
-    const data = [[$,{eredmenyek:helyezes}]];
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels: data.map((_, i) => i + 1),
             datasets: [{
                 label: 'Helyezés',
                 data: data,

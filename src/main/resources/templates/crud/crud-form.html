@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CRUD Eredmeny</title>
+</head>
+<body>
+<h1 th:text="${eredmeny.id} == null ? 'Új eredmény' : 'Eredmény szerkesztése'"></h1>
+
+<form th:action="@{/crud/save}" th:object="${eredmeny}" method="post">
+    <p>
+        <label>Pilóta AZ:</label>
+        <input type="number" th:field="*{pilotaaz}" required/>
+    </p>
+    <p>
+        <label>Helyezés:</label>
+        <input type="number" th:field="*{helyezes}" required/>
+    </p>
+    <p>
+        <label>GP dátum:</label>
+        <select th:field="*{datum}">
+            <option th:each="gp : ${gps}" th:value="${gp.datum}" th:text="${gp.datum}"></option>
+        </select>
+    </p>
+    <p>
+        <label>Hiba:</label>
+        <input type="text" th:field="*{hiba}"/>
+    </p>
+    <p>
+        <label>Csapat:</label>
+        <input type="text" th:field="*{csapat}"/>
+    </p>
+    <p>
+        <label>Típus:</label>
+        <input type="text" th:field="*{tipus}"/>
+    </p>
+    <p>
+        <label>Motor:</label>
+        <input type="text" th:field="*{motor}"/>
+    </p>
+    <p>
+        <button type="submit">Mentés</button>
+    </p>
+</form>
+
+<a th:href="@{/crud}">Vissza a listához</a>
+</body>
+</html>
