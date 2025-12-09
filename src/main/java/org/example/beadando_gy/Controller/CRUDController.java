@@ -1,51 +1,56 @@
 package org.example.beadando_gy.Controller;
 
-import org.example.beadando_gy.Entity.ExampleEntity;
-import org.example.beadando_gy.service.ExampleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.beadando_gy.Entity.Eredmeny;
+import org.example.beadando_gy.repository.EredmenyRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/crud")
-public class CrudController {
-    @Autowired
-    private ExampleService service;
+public class CRUDController {
+
+    private final EredmenyRepository eredmenyRepository;
+
+    public CRUDController(EredmenyRepository eredmenyRepository) {
+        this.eredmenyRepository = eredmenyRepository;
+    }
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("items", service.findAll());
-        return "crud/list";
+        List<Eredmeny> eredmenyek = eredmenyRepository.findAll();
+        model.addAttribute("eredmenyek", eredmenyek);
+        model.addAttribute("eredmeny", new Eredmeny());
+        return "crud";
     }
 
-    @GetMapping("/add")
-    public String addForm(Model model) {
-        model.addAttribute("item", new ExampleEntity());
-        return "crud/form";
-    }
-
-    @PostMapping("/add")
-    public String add(@ModelAttribute ExampleEntity item) {
-        service.save(item);
+    @PostMapping("/create")
+    public String saveOrUpdate(@ModelAttribute Eredmeny eredmeny) {
+        if (eredmeny.getId() != null) {
+            // Edit
+            Eredmeny existing = eredmenyRepository.findById(eredmeny.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid id:" + eredmeny.getId()));
+            existing.setDatum(eredmeny.getDatum());
+            existing.setPilotaaz(eredmeny.getPilotaaz());
+            existing.setHelyezes(eredmeny.getHelyezes());
+            existing.setHiba(eredmeny.getHiba());
+            existing.setCsapat(eredmeny.getCsapat());
+            existing.setTipus(eredmeny.getTipus());
+            existing.setMotor(eredmeny.getMotor());
+            eredmenyRepository.save(existing);
+        } else {
+            // Új rekord
+            eredmenyRepository.save(eredmeny);
+        }
         return "redirect:/crud";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
-        model.addAttribute("item", service.findById(id));
-        return "crud/form";
-    }
-
-    @PostMapping("/edit/{id}")
-    public String edit(@ModelAttribute ExampleEntity item) {
-        service.save(item);
-        return "redirect:/crud";
-    }
-
+    // Törlés
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        service.delete(id);
+        eredmenyRepository.deleteById(id);
         return "redirect:/crud";
     }
 }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Eredmények CRUD</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script>
+        function editEredmeny(id, datum, pilotaaz, helyezes, hiba, csapat, tipus, motor) {
+            document.getElementById('formAction').value = id;
+            document.getElementById('datum').value = datum;
+            document.getElementById('pilotaaz').value = pilotaaz;
+            document.getElementById('helyezes').value = helyezes;
+            document.getElementById('hiba').value = hiba;
+            document.getElementById('csapat').value = csapat;
+            document.getElementById('tipus').value = tipus;
+            document.getElementById('motor').value = motor;
+            document.getElementById('submitBtn').innerText = 'Frissítés';
+        }
+
+        function resetForm() {
+            document.getElementById('formAction').value = '';
+            document.getElementById('datum').value = '';
+            document.getElementById('pilotaaz').value = '';
+            document.getElementById('helyezes').value = '';
+            document.getElementById('hiba').value = '';
+            document.getElementById('csapat').value = '';
+            document.getElementById('tipus').value = '';
+            document.getElementById('motor').value = '';
+            document.getElementById('submitBtn').innerText = 'Mentés';
+        }
+    </script>
+</head>
+<body>
+<h1>Eredmények</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Dátum</th>
+        <th>Pilóta AZ</th>
+        <th>Helyezés</th>
+        <th>Hiba</th>
+        <th>Csapat</th>
+        <th>Tipus</th>
+        <th>Motor</th>
+        <th>Műveletek</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="e : ${eredmenyek}">
+        <td th:text="${e.datum}">2025-01-01</td>
+        <td th:text="${e.pilotaaz}">1</td>
+        <td th:text="${e.helyezes}">1</td>
+        <td th:text="${e.hiba}">hiba</td>
+        <td th:text="${e.csapat}">csapat</td>
+        <td th:text="${e.tipus}">tipus</td>
+        <td th:text="${e.motor}">motor</td>
+        <td>
+            <button type="button"
+                    th:onclick="'editEredmeny(' + ${e.id} + ', \'' + ${e.datum} + '\', ' + ${e.pilotaaz} + ', ' + ${e.helyezes} + ', \'' + ${e.hiba} + '\', \'' + ${e.csapat} + '\', \'' + ${e.tipus} + '\', \'' + ${e.motor} + '\')'">
+                Szerkeszt
+            </button>
+            <a th:href="@{'/crud/delete/' + ${e.id}}" onclick="return confirm('Biztos törlöd?')">Törlés</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<hr/>
+
+<form th:action="@{/crud/create}" th:object="${eredmeny}" method="post" id="crudForm">
+    <input type="hidden" th:field="*{id}" id="formAction"/>
+
+    <label for="datum">Dátum:</label>
+    <input type="date" th:field="*{datum}" id="datum" required/>
+
+    <label for="pilotaaz">Pilóta AZ:</label>
+    <input type="number" th:field="*{pilotaaz}" id="pilotaaz" required/>
+
+    <label for="helyezes">Helyezés:</label>
+    <input type="number" th:field="*{helyezes}" id="helyezes"/>
+
+    <label for="hiba">Hiba:</label>
+    <input type="text" th:field="*{hiba}" id="hiba"/>
+
+    <label for="csapat">Csapat:</label>
+    <input type="text" th:field="*{csapat}" id="csapat"/>
+
+    <label for="tipus">Tipus:</label>
+    <input type="text" th:field="*{tipus}" id="tipus"/>
+
+    <label for="motor">Motor:</label>
+    <input type="text" th:field="*{motor}" id="motor"/>
+
+    <button type="submit" id="submitBtn">Mentés</button>
+    <button type="button" onclick="resetForm()">Mégse</button>
+</form>
+
+</body>
+</html>
