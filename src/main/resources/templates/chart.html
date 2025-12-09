@@ -1,26 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Message Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<canvas id="myChart"></canvas>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
+<nav>
+    <ul>
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/chart}">Chart</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</nav>
+
+<h1>Üzenetek email domain szerint</h1>
+<canvas id="myChart" width="400" height="200"></canvas>
+
+<script th:inline="javascript">
+    const labels = /*[[${labels}]]*/ [];
+    const data = /*[[${data}]]*/ [];
+
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Item1', 'Item2', 'Item3'],
+            labels: labels,
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)'
+                label: 'Üzenetek száma domain szerint',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
             }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
         }
     });
 </script>
-
 </body>
 </html>

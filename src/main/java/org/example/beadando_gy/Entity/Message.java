@@ -1,25 +1,31 @@
 package org.example.beadando_gy.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "messages")
 public class Message {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String email;
 
-    public Long getId() {
-        return id;
+    @Column(length = 2000)
+    private String content;
+
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -46,14 +52,7 @@ public class Message {
         this.content = content;
     }
 
-    public LocalDateTime getSentAt() {
-        return sentAt;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
-
-    public void setSentAt(LocalDateTime sentAt) {
-        this.sentAt = sentAt;
-    }
-
-    private String content;
-    private LocalDateTime sentAt;
 }
